@@ -46,16 +46,16 @@ var arrPins = renderMokiObjects(8);
 var mapPins = document.querySelector('.map__pins');
 var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
 
-/*
-var renderPin = function () {
+var renderPin = function (mokiObject) {
   var pinElement = pinTemplate.cloneNode(true);
-
-  pinElement.querySelector('.map__pin').style.left = ?????;
-
+  pinElement.style.cssText = 'left: ' + mokiObject.location.x + 'px; top: ' + mokiObject.location.y + 'px;';
+  return pinElement;
 };
-*/
 
+var fragment = document.createDocumentFragment();
 for (var i = 0; i < arrPins.length; i++) {
-  var pinElement = pinTemplate.cloneNode(true);
-  mapPins.appendChild(pinElement);
+  fragment.appendChild(renderPin(arrPins[i]));
 }
+mapPins.appendChild(fragment);
+
+
