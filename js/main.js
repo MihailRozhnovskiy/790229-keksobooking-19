@@ -6,9 +6,23 @@ var renderMocks = function (n) {
   var types = ['palace', 'flat', 'house', 'bungalo'];
   var checkinTimes = ['12:00', '13:00', '14:00'];
   var checkoutTimes = ['12:00', '13:00', '14:00'];
+  var features = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
+  var photos = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
   var width = 1200;
   var minHeight = 130;
   var maxHeight = 630;
+
+  var getItems = function (items) {
+    var randomItems = [];
+
+    for (var i = 0; i < items.length; i++) {
+      var rand = Math.random();
+      if (rand > 0.5) {
+        randomItems.push(items[i]);
+      }
+    }
+    return randomItems;
+  };
 
   for (var i = 1; i <= n; i++) {
     var mock = {
@@ -26,9 +40,9 @@ var renderMocks = function (n) {
     mock.offer.guests = i;
     mock.offer.checkin = checkinTimes[Math.floor(Math.random() * checkinTimes.length)];
     mock.offer.checkout = checkoutTimes[Math.floor(Math.random() * checkoutTimes.length)];
-    mock.offer.features = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
+    mock.offer.features = getItems(features);
     mock.offer.description = 'String description';
-    mock.offer.photos = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg'];
+    mock.offer.photos = getItems(photos);
     mock.location.x = Math.floor(Math.random() * Math.floor(width));
     mock.location.y = Math.floor(minHeight + Math.random() * (maxHeight + 1 - minHeight));
 
@@ -37,7 +51,7 @@ var renderMocks = function (n) {
   return mocks;
 };
 
-var arrPins = renderMocks(8);
+var pins = renderMocks(8);
 
 var mapPins = document.querySelector('.map__pins');
 var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
@@ -55,8 +69,8 @@ var renderPin = function (mock) {
 
 var drawPin = function () {
   var fragment = document.createDocumentFragment();
-  for (var i = 0; i < arrPins.length; i++) {
-    fragment.appendChild(renderPin(arrPins[i]));
+  for (var i = 0; i < pins.length; i++) {
+    fragment.appendChild(renderPin(pins[i]));
   }
   mapPins.appendChild(fragment);
 };
