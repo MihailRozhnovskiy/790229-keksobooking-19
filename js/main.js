@@ -53,14 +53,20 @@ var renderPin = function (mock) {
   return pinElement;
 };
 
-var fragment = document.createDocumentFragment();
-for (var i = 0; i < arrPins.length; i++) {
-  fragment.appendChild(renderPin(arrPins[i]));
-}
+var drawPin = function () {
+  var fragment = document.createDocumentFragment();
+  for (var i = 0; i < arrPins.length; i++) {
+    fragment.appendChild(renderPin(arrPins[i]));
+  }
+  mapPins.appendChild(fragment);
+};
 
-mapPins.appendChild(fragment);
+var openMap = function () {
+  drawPin();
+  var map = document.querySelector('.map');
+  map.classList.remove('map--faded');
+};
 
-var map = document.querySelector('.map');
-map.classList.remove('map--faded');
+openMap();
 
 
