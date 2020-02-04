@@ -95,24 +95,7 @@ var renderCard = function (mock) {
 
     for (var i = 0; i < items.length; i++) {
       var li = document.createElement('li');
-      if (items[i] === 'wifi') {
-        li.className = 'popup__feature popup__feature--wifi';
-      }
-      if (items[i] === 'dishwasher') {
-        li.className = 'popup__feature popup__feature--dishwasher';
-      }
-      if (items[i] === 'parking') {
-        li.className = 'popup__feature popup__feature--parking';
-      }
-      if (items[i] === 'washer') {
-        li.className = 'popup__feature popup__feature--washer';
-      }
-      if (items[i] === 'elevator') {
-        li.className = 'popup__feature popup__feature--elevator';
-      }
-      if (items[i] === 'conditioner') {
-        li.className = 'popup__feature popup__feature--conditioner';
-      }
+      li.className = 'popup__feature popup__feature--' + items[i];
       fragment.append(li);
     }
     return fragment;
@@ -158,7 +141,6 @@ var drawPin = function () {
 
 var openMap = function () {
   drawPin();
-  var map = document.querySelector('.map');
   map.classList.remove('map--faded');
 };
 
