@@ -187,10 +187,6 @@ var buttonPinMainPushHandler = function (evt) {
 buttonPinMain.addEventListener('mousedown', buttonPinMainPushHandler);
 buttonPinMain.addEventListener('keydown', buttonPinMainPushHandler);
 
-
-var selectRoom = document.querySelector('#room_number');
-var selectGuest = document.querySelector('#capacity');
-
 var compGuestsRoomsHandler = function (evt) {
   var quantityRoom = document.querySelector('#room_number').value;
   var quantityGuest = document.querySelector('#capacity').value;
@@ -205,5 +201,4 @@ var compGuestsRoomsHandler = function (evt) {
   }
 };
 
-selectRoom.addEventListener('change', compGuestsRoomsHandler);
-selectGuest.addEventListener('change', compGuestsRoomsHandler);
+adForm.addEventListener('change', compGuestsRoomsHandler);
