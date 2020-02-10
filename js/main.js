@@ -187,20 +187,23 @@ var buttonPinMainPushHandler = function (evt) {
 buttonPinMain.addEventListener('mousedown', buttonPinMainPushHandler);
 buttonPinMain.addEventListener('keydown', buttonPinMainPushHandler);
 
-var selectRoom = document.getElementById('room_number').selectedIndex;
-var quantityRoom = document.getElementById('room_number').options[selectRoom].value;
 
-var selectGuest = document.getElementById('capacity').selectedIndex;
-var quantityGuest = document.getElementById('capacity').options[selectGuest].value;
+var selectRoom = document.querySelector('#room_number');
+var selectGuest = document.querySelector('#capacity');
 
-selectRoom.addEventListener('change', function (evt) {
-  if (evt.change) {
-    if (quantityRoom === quantityGuest) {
-      quantityRoom.setCustomValidity('');
-    } else {
-      quantityRoom.setCustomValidity('Количество комнат не соответствует количеству гостей');
-    }
+var compGuestsRoomsHandler = function (evt) {
+  var quantityRoom = document.querySelector('#room_number').value;
+  var quantityGuest = document.querySelector('#capacity').value;
+  var target = evt.target;
+  if (quantityRoom === '1' && quantityGuest !== '1' ||
+      quantityRoom === '2' && quantityGuest !== '1' && quantityGuest !== '2' ||
+      quantityRoom === '3' && quantityGuest !== '1' && quantityGuest !== '2' && quantityGuest !== '3' ||
+      quantityRoom === '100' && quantityGuest !== '0') {
+    target.setCustomValidity('Количество комнат не соответствует количеству гостей');
+  } else {
+    target.setCustomValidity('норм');
   }
-});
+};
 
-
+selectRoom.addEventListener('change', compGuestsRoomsHandler);
+selectGuest.addEventListener('change', compGuestsRoomsHandler);
