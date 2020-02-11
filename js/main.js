@@ -55,9 +55,6 @@ var renderMocks = function (n) {
 
 var pins = renderMocks(QUANTITY_MOCKS);
 
-var map = document.querySelector('.map');
-var filtersContainer = document.querySelector('.map__filters-container');
-
 var renderPin = function (mock) {
   var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
   var pinElement = pinTemplate.cloneNode(true);
@@ -130,8 +127,6 @@ var renderCard = function (mock) {
   return cardElement;
 };
 
-map.insertBefore(renderCard(pins[0]), filtersContainer);
-
 var drawPin = function () {
   var mapPins = document.querySelector('.map__pins');
   var fragment = document.createDocumentFragment();
@@ -141,10 +136,72 @@ var drawPin = function () {
   mapPins.appendChild(fragment);
 };
 
-var openMap = function () {
-  drawPin();
-  map.classList.remove('map--faded');
+//
+var formFields = document.querySelectorAll('fieldset');
+var buttonPinMain = document.querySelector('.map__pin--main');
+var adForm = document.querySelector('.ad-form');
+
+
+var setFieldsetDisabled = function () {
+  for (var i = 0; i < formFields.length; i++) {
+    formFields[i].setAttribute('disabled', 'disabled');
+  }
+  return formFields;
 };
 
-openMap();
+setFieldsetDisabled();
 
+var delFieldsetDisabled = function () {
+  for (var i = 0; i < formFields.length; i++) {
+    formFields[i].removeAttribute('disabled');
+  }
+  return formFields;
+};
+
+var getAddress = function () {
+  var address = adForm.querySelector('#address');
+  var pinMainTop = buttonPinMain.style.top;
+  var pinMainLeft = buttonPinMain.style.left;
+  var pinMainSizeX = (buttonPinMain.firstElementChild.width) / 2;
+  var pinMainSizeY = (buttonPinMain.firstElementChild.height) / 2;
+  var addressValue = parseInt(pinMainLeft, 10) + pinMainSizeX + ', ' + (parseInt(pinMainTop, 10) + pinMainSizeY);
+  address.setAttribute('value', addressValue);
+  return address;
+};
+
+getAddress();
+
+var buttonPinMainPushHandler = function (evt) {
+  var map = document.querySelector('.map');
+  var filtersContainer = document.querySelector('.map__filters-container');
+
+  if (evt.button === 0 || evt.key === 'Enter') {
+    drawPin();
+    map.insertBefore(renderCard(pins[0]), filtersContainer);
+    delFieldsetDisabled();
+    map.classList.remove('map--faded');
+    adForm.classList.remove('ad-form--disabled');
+  }
+};
+
+buttonPinMain.addEventListener('mousedown', buttonPinMainPushHandler);
+buttonPinMain.addEventListener('keydown', buttonPinMainPushHandler);
+
+var selectRoom = document.querySelector('#room_number');
+var selectGuest = document.querySelector('#capacity');
+
+var compGuestsRoomsHandler = function () {
+  var quantityRoom = document.querySelector('#room_number').value;
+  var quantityGuest = document.querySelector('#capacity').value;
+  if ((quantityRoom === '1' && quantityGuest !== '1') ||
+      (quantityRoom === '2' && quantityGuest !== '1' && quantityGuest !== '2') ||
+      (quantityRoom === '3' && quantityGuest !== '1' && quantityGuest !== '2' && quantityGuest !== '3') ||
+      (quantityRoom === '100' && quantityGuest !== '0')) {
+    selectRoom.setCustomValidity('Количество комнат не соответствует количеству гостей');
+  } else {
+    selectRoom.setCustomValidity('норм');
+  }
+};
+
+selectRoom.addEventListener('change', compGuestsRoomsHandler);
+selectGuest.addEventListener('change', compGuestsRoomsHandler);
