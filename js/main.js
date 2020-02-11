@@ -187,18 +187,21 @@ var buttonPinMainPushHandler = function (evt) {
 buttonPinMain.addEventListener('mousedown', buttonPinMainPushHandler);
 buttonPinMain.addEventListener('keydown', buttonPinMainPushHandler);
 
-var compGuestsRoomsHandler = function (evt) {
+var selectRoom = document.querySelector('#room_number');
+var selectGuest = document.querySelector('#capacity');
+
+var compGuestsRoomsHandler = function () {
   var quantityRoom = document.querySelector('#room_number').value;
   var quantityGuest = document.querySelector('#capacity').value;
-  var target = evt.target;
   if ((quantityRoom === '1' && quantityGuest !== '1') ||
       (quantityRoom === '2' && quantityGuest !== '1' && quantityGuest !== '2') ||
       (quantityRoom === '3' && quantityGuest !== '1' && quantityGuest !== '2' && quantityGuest !== '3') ||
       (quantityRoom === '100' && quantityGuest !== '0')) {
-    target.setCustomValidity('Количество комнат не соответствует количеству гостей');
+    selectRoom.setCustomValidity('Количество комнат не соответствует количеству гостей');
   } else {
-    target.setCustomValidity('норм');
+    selectRoom.setCustomValidity('норм');
   }
 };
 
-adForm.addEventListener('change', compGuestsRoomsHandler);
+selectRoom.addEventListener('change', compGuestsRoomsHandler);
+selectGuest.addEventListener('change', compGuestsRoomsHandler);
