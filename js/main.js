@@ -191,10 +191,10 @@ var compGuestsRoomsHandler = function (evt) {
   var quantityRoom = document.querySelector('#room_number').value;
   var quantityGuest = document.querySelector('#capacity').value;
   var target = evt.target;
-  if (quantityRoom === '1' && quantityGuest !== '1' ||
-      quantityRoom === '2' && quantityGuest !== '1' && quantityGuest !== '2' ||
-      quantityRoom === '3' && quantityGuest !== '1' && quantityGuest !== '2' && quantityGuest !== '3' ||
-      quantityRoom === '100' && quantityGuest !== '0') {
+  if ((quantityRoom === '1' && quantityGuest !== '1') ||
+      (quantityRoom === '2' && quantityGuest !== '1' && quantityGuest !== '2') ||
+      (quantityRoom === '3' && quantityGuest !== '1' && quantityGuest !== '2' && quantityGuest !== '3') ||
+      (quantityRoom === '100' && quantityGuest !== '0')) {
     target.setCustomValidity('Количество комнат не соответствует количеству гостей');
   } else {
     target.setCustomValidity('норм');
