@@ -47,6 +47,7 @@ var renderMocks = function (n) {
     mock.offer.photos = getItems(photos);
     mock.location.x = Math.floor(Math.random() * Math.floor(widthMap));
     mock.location.y = Math.floor(MIN_HEIGHT + Math.random() * (MAX_HEIGHT + 1 - MIN_HEIGHT));
+    mock.dataIndex = i - 1;
 
     mocks.push(mock);
   }
@@ -64,6 +65,7 @@ var renderPin = function (mock) {
   pinElement.style.cssText = 'left: ' + (mock.location.x + pinSizeX) + 'px; top: ' + (mock.location.y + pinSizeY) + 'px;';
   pinElement.firstChild.setAttribute('src', mock.author.avatar);
   pinElement.firstChild.setAttribute('alt', mock.offer.title);
+  pinElement.firstChild.setAttribute('data-index', mock.dataIndex);
   return pinElement;
 };
 
@@ -136,7 +138,6 @@ var drawPin = function () {
   mapPins.appendChild(fragment);
 };
 
-//
 var formFields = document.querySelectorAll('fieldset');
 var buttonPinMain = document.querySelector('.map__pin--main');
 var adForm = document.querySelector('.ad-form');
@@ -173,11 +174,8 @@ getAddress();
 
 var buttonPinMainPushHandler = function (evt) {
   var map = document.querySelector('.map');
-  var filtersContainer = document.querySelector('.map__filters-container');
-
   if (evt.button === 0 || evt.key === 'Enter') {
     drawPin();
-    map.insertBefore(renderCard(pins[0]), filtersContainer);
     delFieldsetDisabled();
     map.classList.remove('map--faded');
     adForm.classList.remove('ad-form--disabled');
@@ -205,3 +203,45 @@ var compGuestsRoomsHandler = function () {
 
 selectRoom.addEventListener('change', compGuestsRoomsHandler);
 selectGuest.addEventListener('change', compGuestsRoomsHandler);
+
+
+var map = document.querySelector('.map');
+
+var mousedownPinOpenCardHandler = function (evt) {
+  var filtersContainer = document.querySelector('.map__filters-container');
+  var target = evt.target.getAttribute('data-index');
+  map.insertBefore(renderCard(pins[target]), filtersContainer);
+};
+
+map.addEventListener('click', mousedownPinOpenCardHandler);
+
+var keydownPinOpenCardHandler = function (evt) {
+  var filtersContainer = document.querySelector('.map__filters-container');
+  var target = evt.target.firstElementChild.getAttribute('data-index');
+  if (evt.key === 'Enter') {
+    map.insertBefore(renderCard(pins[target]), filtersContainer);
+  }
+};
+
+map.addEventListener('keydown', keydownPinOpenCardHandler);
+
+
+
+
+
+/*
+var buttonCloseCard = document.querySelector('.popup__close');
+
+console.log(buttonCloseCard);
+
+var buttonCloseCardHandler = function (evt) {
+  var card = document.querySelector('#card');
+
+  if (evt.button === 0 || evt.key === 'Escape') {
+    card.remove();
+  }
+};
+
+buttonCloseCard.addEventListener('mousedown', buttonCloseCardHandler);
+buttonCloseCard.addEventListener('keydown', buttonCloseCardHandler);
+*/
