@@ -204,44 +204,38 @@ var compGuestsRoomsHandler = function () {
 selectRoom.addEventListener('change', compGuestsRoomsHandler);
 selectGuest.addEventListener('change', compGuestsRoomsHandler);
 
-
+//
 var map = document.querySelector('.map');
-
-var mousedownPinOpenCardHandler = function (evt) {
+var openPopup = function (target) {
   var filtersContainer = document.querySelector('.map__filters-container');
-  var target = evt.target.getAttribute('data-index');
   map.insertBefore(renderCard(pins[target]), filtersContainer);
 };
 
-map.addEventListener('click', mousedownPinOpenCardHandler);
-
-var keydownPinOpenCardHandler = function (evt) {
-  var filtersContainer = document.querySelector('.map__filters-container');
-  var target = evt.target.firstElementChild.getAttribute('data-index');
-  if (evt.key === 'Enter') {
-    map.insertBefore(renderCard(pins[target]), filtersContainer);
-  }
-};
-
-map.addEventListener('keydown', keydownPinOpenCardHandler);
-
-
-
-
-
-/*
-var buttonCloseCard = document.querySelector('.popup__close');
-
-console.log(buttonCloseCard);
-
-var buttonCloseCardHandler = function (evt) {
-  var card = document.querySelector('#card');
-
-  if (evt.button === 0 || evt.key === 'Escape') {
+var closePopupHandler = function (evt) {
+  var card = document.querySelector('.map__card');
+  if (evt || evt.key === 'Escape') {
     card.remove();
   }
 };
 
-buttonCloseCard.addEventListener('mousedown', buttonCloseCardHandler);
-buttonCloseCard.addEventListener('keydown', buttonCloseCardHandler);
-*/
+var mousedownPinOpenPopupHandler = function (evt) {
+  var target = evt.target.getAttribute('data-index');
+  if (target) {
+    openPopup(target);
+    var buttonCloseCard = document.querySelector('.popup__close');
+    buttonCloseCard.addEventListener('click', closePopupHandler);
+    buttonCloseCard.addEventListener('keydown', closePopupHandler);
+  }
+};
+map.addEventListener('click', mousedownPinOpenPopupHandler);
+
+var keydownPinOpenPopupHandler = function (evt) {
+  var target = evt.target.firstElementChild.getAttribute('data-index');
+  if (target && evt.key === 'Enter') {
+    openPopup(target);
+    var buttonCloseCard = document.querySelector('.popup__close');
+    buttonCloseCard.addEventListener('keydown', closePopupHandler);
+    buttonCloseCard.addEventListener('click', closePopupHandler);
+  }
+};
+map.addEventListener('keydown', keydownPinOpenPopupHandler);
