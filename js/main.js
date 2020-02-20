@@ -185,7 +185,6 @@ var buttonPinMainPushHandler = function (evt) {
 buttonPinMain.addEventListener('mousedown', buttonPinMainPushHandler);
 buttonPinMain.addEventListener('keydown', buttonPinMainPushHandler);
 
-//
 var formTitle = document.querySelector('#title');
 
 var formTitleInputHandler = function () {
@@ -229,7 +228,6 @@ var compTypeLodgingPriceHandler = function () {
 formPrice.addEventListener('change', compTypeLodgingPriceHandler);
 selectTypeLodging.addEventListener('change', compTypeLodgingPriceHandler);
 
-
 var selectRoom = document.querySelector('#room_number');
 var selectGuest = document.querySelector('#capacity');
 
@@ -248,15 +246,6 @@ var compGuestsRoomsHandler = function () {
 selectRoom.addEventListener('change', compGuestsRoomsHandler);
 selectGuest.addEventListener('change', compGuestsRoomsHandler);
 
-var formAddress = document.querySelector('#address');
-
-var formAddressHandler = function () {
-  if (focus) {
-    formAddress.setCustomValidity('Ручное редактирование поля запрещено');
-  }
-};
-formAddress.addEventListener('focus', formAddressHandler);
-
 var selectTimeIn = document.querySelector('#timein');
 var selectTimeOut = document.querySelector('#timeout');
 
@@ -272,23 +261,12 @@ var compTimeInTimeOutHandler = function () {
 selectTimeIn.addEventListener('change', compTimeInTimeOutHandler);
 selectTimeOut.addEventListener('change', compTimeInTimeOutHandler);
 
-
-var formAvatar = document.querySelector('#avatar');
-var formImages = document.querySelector('#images');
-
-var formAvatarImagesHandler = function () {
-  if (formAvatar.focus) {
-    formAvatar.setCustomValidity('Загрузите изображение');
-  } else if (formImages.focus) {
-    formImages.setCustomValidity('Загрузите изображение');
-  }
-};
-formAvatar.addEventListener('focus', formAvatarImagesHandler);
-formImages.addEventListener('focus', formAvatarImagesHandler);
-
-//
 var map = document.querySelector('.map');
 var openPopup = function (target) {
+  var card = document.querySelector('.map__card');
+  if (card) {
+    closePopup();
+  }
   var filtersContainer = document.querySelector('.map__filters-container');
   map.insertBefore(renderCard(pins[target]), filtersContainer);
 };
