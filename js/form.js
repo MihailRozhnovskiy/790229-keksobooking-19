@@ -14,7 +14,7 @@
       formTitle.setCustomValidity('');
     }
   };
-  formTitle.addEventListener('invalid', formTitleInputHandler);
+  formTitle.addEventListener('change', formTitleInputHandler);
 
   var selectTypeLodging = document.querySelector('#type');
   var formPrice = document.querySelector('#price');
@@ -29,12 +29,16 @@
     var MAX_PRICE = 1000000;
     if (typeLodging === 'bungalo' && price < MIN_PRICE_BUNGALO) {
       formPrice.setCustomValidity('«Бунгало» — минимальная цена за ночь 0');
+      formPrice.setAttribute('placeholder', MIN_PRICE_BUNGALO);
     } else if (typeLodging === 'flat' && price < MIN_PRICE_FLAT) {
       formPrice.setCustomValidity('«Квартира» — минимальная цена за ночь 1 000');
+      formPrice.setAttribute('placeholder', MIN_PRICE_FLAT);
     } else if (typeLodging === 'house' && price < MIN_PRICE_HOUSE) {
       formPrice.setCustomValidity('«Дом» — минимальная цена за ночь 5 000');
+      formPrice.setAttribute('placeholder', MIN_PRICE_HOUSE);
     } else if (typeLodging === 'palace' && price < MIN_PRICE_PALACE) {
       formPrice.setCustomValidity('«Дворец» — минимальная цена за ночь 10 000');
+      formPrice.setAttribute('placeholder', MIN_PRICE_PALACE);
     } else if (price > MAX_PRICE) {
       formPrice.setCustomValidity('Максимальное значение — 1 000 000');
     } else {
@@ -59,6 +63,7 @@
       selectRoom.setCustomValidity('');
     }
   };
+  compGuestsRoomsHandler();
   selectRoom.addEventListener('change', compGuestsRoomsHandler);
   selectGuest.addEventListener('change', compGuestsRoomsHandler);
 
@@ -74,6 +79,7 @@
       selectTimeIn.setCustomValidity('«Время выезда» должно быть не менее чем за час до «Время заезда»');
     }
   };
+  compTimeInTimeOutHandler();
   selectTimeIn.addEventListener('change', compTimeInTimeOutHandler);
   selectTimeOut.addEventListener('change', compTimeInTimeOutHandler);
 })();

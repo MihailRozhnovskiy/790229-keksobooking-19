@@ -43,10 +43,8 @@
       adForm.classList.remove('ad-form--disabled');
     }
   };
-
   buttonPinMain.addEventListener('mousedown', buttonPinMainPushHandler);
   buttonPinMain.addEventListener('keydown', buttonPinMainPushHandler);
-
 
   var escClosePopupHandler = function (evt) {
     if (evt.key === 'Escape') {

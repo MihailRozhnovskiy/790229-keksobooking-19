@@ -57,4 +57,3 @@
   window.data = renderMocks(QUANTITY_MOCKS);
 })();
 
-console.log(window.data);

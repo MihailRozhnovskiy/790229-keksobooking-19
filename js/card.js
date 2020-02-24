@@ -79,10 +79,8 @@
   };
 
   window.card = {
-    openPopup: openPopup(),
-    closePopup: closePopup()
+    openPopup: openPopup,
+    closePopup: closePopup
   };
-
 })();
 
-console.log(window.card);

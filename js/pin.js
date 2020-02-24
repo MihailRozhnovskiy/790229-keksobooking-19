@@ -26,7 +26,6 @@
   };
 
   window.pin = {
-    drawPin: drawPin()
+    drawPin: drawPin
   };
-
 })();
