@@ -25,6 +25,8 @@
 
       pinMain.style.top = (pinMain.offsetTop - shift.y) + 'px';
       pinMain.style.left = (pinMain.offsetLeft - shift.x) + 'px';
+
+      getAddress();
     };
 
     var onMouseUpHandler = function (upEvt) {
@@ -38,4 +40,16 @@
     document.addEventListener('mouseup', onMouseUpHandler);
   };
   pinMain.addEventListener('mousedown', onMouseDownHandler);
+
+  var getAddress = function () {
+    var address = document.querySelector('#address');
+    var pinMainTop = pinMain.style.top;
+    var pinMainLeft = pinMain.style.left;
+    var pinMainSizeX = (pinMain.firstElementChild.width) / 2;
+    var pinMainSizeY = (pinMain.firstElementChild.height) / 2;
+    var addressValue = parseInt(pinMainLeft, 10) + pinMainSizeX + ', ' + (parseInt(pinMainTop, 10) + pinMainSizeY);
+    address.setAttribute('value', addressValue);
+    return address;
+  };
+  getAddress();
 })();

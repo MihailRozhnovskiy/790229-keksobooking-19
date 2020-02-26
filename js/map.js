@@ -22,19 +22,6 @@
     return formFields;
   };
 
-  var getAddress = function () {
-    var address = adForm.querySelector('#address');
-    var pinMainTop = buttonPinMain.style.top;
-    var pinMainLeft = buttonPinMain.style.left;
-    var pinMainSizeX = (buttonPinMain.firstElementChild.width) / 2;
-    var pinMainSizeY = (buttonPinMain.firstElementChild.height) / 2;
-    var addressValue = parseInt(pinMainLeft, 10) + pinMainSizeX + ', ' + (parseInt(pinMainTop, 10) + pinMainSizeY);
-    address.setAttribute('value', addressValue);
-    return address;
-  };
-
-  getAddress();
-
   var buttonPinMainPushHandler = function (evt) {
     if (evt.button === 0 || evt.key === 'Enter') {
       window.pin.drawPin();
