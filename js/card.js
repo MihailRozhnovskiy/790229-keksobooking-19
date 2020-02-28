@@ -1,7 +1,9 @@
 'use strict';
 
 (function () {
-  var pins = window.data;
+  var pins = window.dataLoad;
+
+  console.log(pins);
 
   var renderCard = function (mock) {
     var cardTemplate = document.querySelector('#card').content.querySelector('.map__card');
