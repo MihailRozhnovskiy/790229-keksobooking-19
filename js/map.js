@@ -45,6 +45,7 @@
 
   var mousedownPinOpenPopupHandler = function (evt) {
     var target = evt.target.getAttribute('data-index');
+
     if (target) {
       window.card.openPopup(target);
       var buttonCloseCard = document.querySelector('.popup__close');

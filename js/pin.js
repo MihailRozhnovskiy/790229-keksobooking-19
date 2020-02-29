@@ -1,7 +1,7 @@
 'use strict';
 
 (function () {
-  var renderPin = function (pin) {
+  var renderPin = function (pin, i) {
     var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
     var pinElement = pinTemplate.cloneNode(true);
     var pinSizeX = (pinElement.firstChild.width) / 2;
@@ -10,7 +10,7 @@
     pinElement.style.cssText = 'left: ' + (pin.location.x + pinSizeX) + 'px; top: ' + (pin.location.y + pinSizeY) + 'px;';
     pinElement.firstChild.setAttribute('src', pin.author.avatar);
     pinElement.firstChild.setAttribute('alt', pin.offer.title);
-    pinElement.firstChild.setAttribute('data-index', pin.dataIndex);
+    pinElement.firstChild.setAttribute('data-index', i);
     return pinElement;
   };
 
@@ -18,7 +18,7 @@
     var mapPins = document.querySelector('.map__pins');
     var fragment = document.createDocumentFragment();
     for (var i = 0; i < pins.length; i++) {
-      fragment.appendChild(renderPin(pins[i]));
+      fragment.appendChild(renderPin(pins[i], i));
     }
     mapPins.appendChild(fragment);
   };
