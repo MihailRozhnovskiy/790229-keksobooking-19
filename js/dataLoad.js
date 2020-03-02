@@ -10,8 +10,7 @@
       window.dataLoad = data;
       window.card.getPins(data);
     } else {
-      alert('Статус ответа: ' + xhr.status + '' + xhr.statusText);//Куда выводить? В разметке нет template под такое сообщение.
-      //template под "Сообщение об ошибке создания объявления" - есть, а под сообщение об ошибке загрузки данных с сервера - нет.
+      window.error.openErrorMessage('Статус ответа: ' + xhr.status + ' ' + xhr.statusText);
     }
   };
   xhr.addEventListener('load', loadHandler);
