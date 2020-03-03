@@ -24,7 +24,7 @@
 
   var buttonPinMainPushHandler = function (evt) {
     if (evt.button === 0 || evt.key === 'Enter') {
-      window.pin.drawPin();
+      window.pin.drawPin(window.dataLoad);
       delFieldsetDisabled();
       map.classList.remove('map--faded');
       adForm.classList.remove('ad-form--disabled');
@@ -45,6 +45,7 @@
 
   var mousedownPinOpenPopupHandler = function (evt) {
     var target = evt.target.getAttribute('data-index');
+
     if (target) {
       window.card.openPopup(target);
       var buttonCloseCard = document.querySelector('.popup__close');
