@@ -82,4 +82,51 @@
   compTimeInTimeOutHandler();
   selectTimeIn.addEventListener('change', compTimeInTimeOutHandler);
   selectTimeOut.addEventListener('change', compTimeInTimeOutHandler);
+
+  var form = document.querySelector('.ad-form');
+  var main = document.querySelector('main');
+
+  var buttonUploadHandler = function (evt) {
+    evt.preventDefault();
+    window.dataLoadUpload.upload(new FormData(form), function (status, statusText) {
+      var SERVER_OK = 200;
+      if (status === SERVER_OK) {
+        var successTemplate = document.querySelector('#success').content.querySelector('.success');
+        var successElement = successTemplate.cloneNode(true);
+        main.appendChild(successElement);
+        var getTimeout = function () {
+          window.location.reload();
+        };
+        setTimeout(getTimeout, 3000);
+      } else {
+        window.error.openErrorMessage('Ошибка! Статус ответа сервера: ' + status + ' ' + statusText);
+      }
+      document.addEventListener('keydown', escCloseSuccessMessageHandler);
+      main.addEventListener('click', clickCloseSuccessMessageHandler);
+    });
+  };
+  form.addEventListener('submit', buttonUploadHandler);
+
+  var closeSuccessMessage = function () {
+    var success = main.querySelector('.success');
+    success.remove();
+  };
+
+  var escCloseSuccessMessageHandler = function (evt) {
+    if (evt.key === 'Escape') {
+      closeSuccessMessage();
+    }
+  };
+
+  var clickCloseSuccessMessageHandler = function () {
+    closeSuccessMessage();
+    window.location.reload();
+  };
+
+  var buttonResetForm = form.querySelector('.ad-form__reset');
+
+  var buttonResetFormHandler = function () {
+    form.reset();
+  };
+  buttonResetForm.addEventListener('click', buttonResetFormHandler);
 })();
