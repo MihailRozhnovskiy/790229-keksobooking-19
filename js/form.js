@@ -82,4 +82,68 @@
   compTimeInTimeOutHandler();
   selectTimeIn.addEventListener('change', compTimeInTimeOutHandler);
   selectTimeOut.addEventListener('change', compTimeInTimeOutHandler);
+
+  var form = document.querySelector('.ad-form');
+  var main = document.querySelector('main');
+  var adForm = document.querySelector('.ad-form');
+  var map = document.querySelector('.map');
+
+  var buttonUploadHandler = function (evt) {
+    evt.preventDefault();
+    var mapPins = document.querySelectorAll('.map__pin');
+    window.dataLoadUpload.upload(new FormData(form), function (status, statusText) {
+      var SERVER_OK = 200;
+
+      var getStartPage = function () {
+        closeSuccessMessage();
+        form.reset();
+        adForm.classList.add('ad-form--disabled');
+        map.classList.add('map--faded');
+        for (var i = 1; i < mapPins.length; i++) {
+          mapPins[i].remove();
+        }
+        main.removeEventListener('click', clickCloseSuccessMessageHandler);
+        document.removeEventListener('keydown', escCloseSuccessMessageHandler);
+      };
+      window.form = {getStartPage: getStartPage};
+
+      if (status === SERVER_OK) {
+        var successTemplate = document.querySelector('#success').content.querySelector('.success');
+        var successElement = successTemplate.cloneNode(true);
+        main.appendChild(successElement);
+        setTimeout(window.form.getStartPage, 2000);
+      } else {
+        window.error.openErrorMessage('Ошибка! Статус ответа сервера: ' + status + ' ' + statusText);
+      }
+      document.addEventListener('keydown', escCloseSuccessMessageHandler);
+      main.addEventListener('click', clickCloseSuccessMessageHandler);
+    });
+  };
+  form.addEventListener('submit', buttonUploadHandler);
+
+  var closeSuccessMessage = function () {
+    var success = main.querySelector('.success');
+    if (success) {
+      success.remove();
+    }
+  };
+
+  var escCloseSuccessMessageHandler = function (evt) {
+    if (evt.key === 'Escape') {
+      closeSuccessMessage();
+      window.form.getStartPage();
+    }
+  };
+
+  var clickCloseSuccessMessageHandler = function () {
+    closeSuccessMessage();
+    window.form.getStartPage();
+  };
+
+  var buttonResetForm = form.querySelector('.ad-form__reset');
+
+  var buttonResetFormHandler = function () {
+    form.reset();
+  };
+  buttonResetForm.addEventListener('click', buttonResetFormHandler);
 })();
