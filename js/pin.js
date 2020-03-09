@@ -14,10 +14,10 @@
     return pinElement;
   };
 
-  var drawPin = function (pins) {
+  var drawPin = function (pins, quantityPins) {
     var mapPins = document.querySelector('.map__pins');
     var fragment = document.createDocumentFragment();
-    for (var i = 0; i < pins.length; i++) {
+    for (var i = 0; i < quantityPins; i++) {
       fragment.appendChild(renderPin(pins[i], i));
     }
     mapPins.appendChild(fragment);

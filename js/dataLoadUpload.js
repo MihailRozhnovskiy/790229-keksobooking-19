@@ -8,7 +8,7 @@
     var data = JSON.parse(xhr.responseText);
     if (xhr.status === SERVER_OK) {
       window.dataLoad = data;
-      window.card.getPins(data);
+      window.filters.getPins(data);
     } else {
       window.error.openErrorMessage('Ошибка! Статус ответа сервера: ' + xhr.status + ' ' + xhr.statusText);
     }
