@@ -31,19 +31,13 @@
     for (var i = 0; i < window.pins.length; i++) {
       if (window.pins[i].offer.type === housingType) {
         window.selectedTypePins.push(window.pins[i]);
-      } else if (housingType === 'any') {
-        window.selectedTypePins = window.pins;
       }
     }
-
-    if (window.selectedTypePins.length < CONST_QUANTITY_PINS) {
-      var quantityPins = window.selectedTypePins.length;
-    } else {
-      quantityPins = CONST_QUANTITY_PINS;
+    if (housingType === 'any') {
+      window.selectedTypePins = window.pins;
     }
-
+    var quantityPins = Math.min(window.selectedTypePins.length, CONST_QUANTITY_PINS);
     window.pin.drawPin(window.selectedTypePins, quantityPins);
-
   };
   selectHousingType.addEventListener('change', housingTypeHandler);
 
