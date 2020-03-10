@@ -95,7 +95,11 @@
       var SERVER_OK = 200;
 
       var getStartPage = function () {
+        var card = document.querySelector('.map__card');
         closeSuccessMessage();
+        if (card) {
+          window.card.closePopup();
+        }
         form.reset();
         adForm.classList.add('ad-form--disabled');
         map.classList.add('map--faded');

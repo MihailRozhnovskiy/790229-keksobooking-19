@@ -2,10 +2,6 @@
 
 (function () {
 
-  var getPins = function (data) {
-    window.pins = data;
-  };
-
   var renderCard = function (pin) {
     var cardTemplate = document.querySelector('#card').content.querySelector('.map__card');
     var cardElement = cardTemplate.cloneNode(true);
@@ -73,7 +69,7 @@
       closePopup();
     }
     var filtersContainer = document.querySelector('.map__filters-container');
-    map.insertBefore(renderCard(window.pins[target]), filtersContainer);
+    map.insertBefore(renderCard(window.selectedTypePins[target]), filtersContainer);
   };
 
   var closePopup = function () {
@@ -84,7 +80,6 @@
   window.card = {
     openPopup: openPopup,
     closePopup: closePopup,
-    getPins: getPins
   };
 })();
 
