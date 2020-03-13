@@ -69,7 +69,7 @@
       closePopup();
     }
     var filtersContainer = document.querySelector('.map__filters-container');
-    map.insertBefore(renderCard(window.selectedTypePins[target]), filtersContainer);
+    map.insertBefore(renderCard(window.selectedPins[target]), filtersContainer);
   };
 
   var closePopup = function () {
