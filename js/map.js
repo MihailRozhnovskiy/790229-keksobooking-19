@@ -24,7 +24,7 @@
 
   var buttonPinMainPushHandler = function (evt) {
     if (evt.button === 0 || evt.key === 'Enter') {
-      window.filters.housingTypeHandler();
+      window.filters.mapFiltersHandler();
       delFieldsetDisabled();
       map.classList.remove('map--faded');
       adForm.classList.remove('ad-form--disabled');
