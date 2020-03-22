@@ -36,7 +36,7 @@
     closeErrorMessage();
   };
 
-  window.error = {
+  window.mistake = {
     openErrorMessage: openErrorMessage
   };
 })();

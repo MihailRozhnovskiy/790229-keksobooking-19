@@ -1,12 +1,15 @@
 'use strict';
 
 (function () {
-  var pinMain = document.querySelector('.map__pin--main');
-  var widthMap = document.querySelector('body').clientWidth;
+
   var MIN_HEIGHT = 130;
   var MAX_HEIGHT = 630;
-  var pinMainSizeX = (pinMain.firstElementChild.width) / 2;
-  var pinMainSizeY = (pinMain.firstElementChild.height) / 2;
+  var HALF = 2;
+  var DECIMAL_NUMBER_SYSTEM = 10;
+  var pinMain = document.querySelector('.map__pin--main');
+  var widthMap = document.querySelector('body').clientWidth;
+  var pinMainSizeX = (pinMain.clientWidth) / HALF;
+  var pinMainSizeY = pinMain.clientHeight;
 
   var onMouseDownHandler = function (evt) {
     evt.preventDefault();
@@ -32,7 +35,7 @@
       var coordinateY = pinMain.offsetTop - shift.y;
       var coordinateX = pinMain.offsetLeft - shift.x;
 
-      if (coordinateY > (MIN_HEIGHT - pinMainSizeY) && coordinateY < (MAX_HEIGHT + pinMainSizeY)) {
+      if (coordinateY > (MIN_HEIGHT - pinMainSizeY) && coordinateY < (MAX_HEIGHT - (pinMainSizeY / HALF))) {
         pinMain.style.top = coordinateY + 'px';
       }
       if (coordinateX < (widthMap - pinMainSizeX) && coordinateX > (widthMap - widthMap - pinMainSizeX)) {
@@ -57,7 +60,7 @@
     var address = document.querySelector('#address');
     var pinMainTop = pinMain.style.top;
     var pinMainLeft = pinMain.style.left;
-    var addressValue = parseInt(pinMainLeft, 10) + pinMainSizeX + ', ' + (parseInt(pinMainTop, 10) + pinMainSizeY);
+    var addressValue = Math.round(parseInt(pinMainLeft, DECIMAL_NUMBER_SYSTEM) + pinMainSizeX) + ', ' + Math.round(parseInt(pinMainTop, DECIMAL_NUMBER_SYSTEM) + pinMainSizeY);
     address.setAttribute('value', addressValue);
     return address;
   };

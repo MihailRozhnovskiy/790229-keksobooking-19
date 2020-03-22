@@ -1,13 +1,15 @@
 'use strict';
 
 (function () {
-  var renderPin = function (pin, i) {
-    var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
-    var pinElement = pinTemplate.cloneNode(true);
-    var pinSizeX = (pinElement.firstChild.width) / 2;
-    var pinSizeY = (pinElement.firstChild.height) / 2;
 
-    pinElement.style.cssText = 'left: ' + (pin.location.x + pinSizeX) + 'px; top: ' + (pin.location.y + pinSizeY) + 'px;';
+  var HALF = 2;
+  var renderPin = function (pin, i) {
+    var pinTemplate = document.querySelector('#pin').content.querySelector('button.map__pin');
+    var pinElement = pinTemplate.cloneNode(true);
+    var pinSizeX = (pinElement.firstChild.width) / HALF;
+    var pinSizeY = (pinElement.firstChild.height) / HALF;
+
+    pinElement.style.cssText = 'left: ' + (pin.location.x - pinSizeX) + 'px; top: ' + (pin.location.y - pinSizeY) + 'px;';
     pinElement.firstChild.setAttribute('src', pin.author.avatar);
     pinElement.firstChild.setAttribute('alt', pin.offer.title);
     pinElement.firstChild.setAttribute('data-index', i);
@@ -24,6 +26,6 @@
   };
 
   window.pin = {
-    drawPin: drawPin
+    drawMarker: drawPin
   };
 })();

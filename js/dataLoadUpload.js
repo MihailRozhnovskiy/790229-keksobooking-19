@@ -1,16 +1,16 @@
 'use strict';
 
 (function () {
+  var SERVER_OK = 200;
   var xhr = new XMLHttpRequest();
 
   var loadHandler = function () {
-    var SERVER_OK = 200;
     var data = JSON.parse(xhr.responseText);
     if (xhr.status === SERVER_OK) {
       window.dataLoad = data;
       window.filters.getPins(data);
     } else {
-      window.error.openErrorMessage('Ошибка! Статус ответа сервера: ' + xhr.status + ' ' + xhr.statusText);
+      window.mistake.openErrorMessage('Ошибка! Статус ответа сервера: ' + xhr.status + ' ' + xhr.statusText);
     }
   };
   xhr.addEventListener('load', loadHandler);
@@ -30,7 +30,7 @@
     xhrUp.send(dataUpload);
   };
 
-  window.dataLoadUpload = {
+  window.data = {
     upload: upload
   };
 })();

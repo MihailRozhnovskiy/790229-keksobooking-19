@@ -2,8 +2,10 @@
 
 (function () {
 
-  var CONST_QUANTITY_PINS = 5;
+  var QUANTITY_PINS = 5;
   var TIMEOUT = 500;
+  var LOW = 10000;
+  var HIGH = 50000;
 
   var getPins = function (data) {
     window.pins = data;
@@ -17,17 +19,15 @@
       window.card.closePopup();
     }
 
-    for (var j = 1; j < mapPins.length; j++) {
-      mapPins[j].remove();
+    for (var i = 1; i < mapPins.length; i++) {
+      mapPins[i].remove();
     }
   };
 
   var mapFilters = document.querySelector('.map__filters');
 
-  var mapFiltersHandler = function () {
+  var mapFiltHandler = function () {
     setTimeout(function () {
-      var LOW = 10000;
-      var HIGH = 50000;
       var housingType = document.querySelector('#housing-type').value;
       var housingPrice = document.querySelector('#housing-price').value;
       var housingRoom = document.querySelector('#housing-rooms').value;
@@ -45,11 +45,12 @@
         if (housingSpecification === 'any') {
           arrSpecification = arrPins;
         }
-        for (var i = 0; i < arrPins.length; i++) {
-          if (String(arrPins[i].offer[specification]) === housingSpecification) {
-            arrSpecification.push(arrPins[i]);
+        arrPins.forEach(function (item) {
+          if (String(item.offer[specification]) === housingSpecification) {
+            arrSpecification.push(item);
           }
-        }
+        });
+
         window.selectedPins = arrSpecification;
       };
       getSelectedPins(housingType, 'type', selectedTypePins, window.pins);
@@ -58,13 +59,13 @@
         selectedPricePins = window.selectedPins;
       }
 
-      for (var j = 0; j < window.selectedPins.length; j++) {
-        if ((housingPrice === 'low' && window.selectedPins[j].offer.price < LOW) ||
-       (housingPrice === 'high' && window.selectedPins[j].offer.price > HIGH) ||
-       (housingPrice === 'middle' && window.selectedPins[j].offer.price >= LOW && window.selectedPins[j].offer.price <= HIGH)) {
-          selectedPricePins.push(window.selectedPins[j]);
+      window.selectedPins.forEach(function (item) {
+        if ((housingPrice === 'low' && item.offer.price < LOW) ||
+          (housingPrice === 'high' && item.offer.price > HIGH) ||
+          (housingPrice === 'middle' && item.offer.price >= LOW && item.offer.price <= HIGH)) {
+          selectedPricePins.push(item);
         }
-      }
+      });
 
       window.selectedPins = selectedPricePins;
 
@@ -74,14 +75,14 @@
 
       var getselectedFeaturePin = function (feature, featureValue) {
         if (feature.checked) {
-          for (var m = 0; m < window.selectedPins.length; m++) {
-            var arrFeatures = window.selectedPins[m].offer.features;
-            for (var n = 0; n < arrFeatures.length; n++) {
-              if (featureValue === arrFeatures[n]) {
-                selectedFeaturePins.push(window.selectedPins[m]);
+          window.selectedPins.forEach(function (item) {
+            var arrFeatures = item.offer.features;
+            arrFeatures.forEach(function (element) {
+              if (featureValue === element) {
+                selectedFeaturePins.push(item);
               }
-            }
-          }
+            });
+          });
         }
       };
 
@@ -107,14 +108,14 @@
         window.selectedPins = selectedFeaturePins;
       }
 
-      var quantityPins = Math.min(window.selectedPins.length, CONST_QUANTITY_PINS);
-      window.pin.drawPin(window.selectedPins, quantityPins);
+      var quantityPins = Math.min(window.selectedPins.length, QUANTITY_PINS);
+      window.pin.drawMarker(window.selectedPins, quantityPins);
     }, TIMEOUT);
   };
-  mapFilters.addEventListener('change', mapFiltersHandler);
+  mapFilters.addEventListener('change', mapFiltHandler);
 
   window.filters = {
     getPins: getPins,
-    mapFiltersHandler: mapFiltersHandler
+    mapFiltHandler: mapFiltHandler
   };
 })();

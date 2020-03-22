@@ -6,32 +6,21 @@
     var cardTemplate = document.querySelector('#card').content.querySelector('.map__card');
     var cardElement = cardTemplate.cloneNode(true);
 
-    var getTypeLodging = function (typeLodging) {
-      var type = '';
-      switch (typeLodging) {
-        case 'palace':
-          type = 'Дворец';
-          break;
-        case 'flat':
-          type = 'Квартира';
-          break;
-        case 'house':
-          type = 'Дом';
-          break;
-        default:
-          type = 'Бунгало';
-      }
-      return type;
+    var typeLodging = {
+      'palace': 'Дворец',
+      'flat': 'Квартира',
+      'house': 'Дом',
+      'bungalo': 'Бунгало'
     };
 
     var getListFeatures = function (features) {
       var fragment = document.createDocumentFragment();
 
-      for (var i = 0; i < features.length; i++) {
+      features.forEach(function (item) {
         var li = document.createElement('li');
-        li.className = 'popup__feature popup__feature--' + features[i];
+        li.className = 'popup__feature popup__feature--' + item;
         fragment.append(li);
-      }
+      });
       return fragment;
     };
 
@@ -41,17 +30,17 @@
       var fragment = document.createDocumentFragment();
       cardElement.querySelector('.popup__photos').innerHTML = '';
 
-      for (var i = 0; i < photos.length; i++) {
-        photoElement.setAttribute('src', photos[i]);
+      photos.forEach(function (item) {
+        photoElement.setAttribute('src', item);
         fragment.append(photoElement);
-      }
+      });
       return fragment;
     };
 
     cardElement.querySelector('.popup__title').textContent = pin.offer.title;
     cardElement.querySelector('.popup__text--address').textContent = pin.offer.address;
     cardElement.querySelector('.popup__text--price').textContent = pin.offer.price + ' ₽ /ночь';
-    cardElement.querySelector('.popup__type').textContent = getTypeLodging(pin.offer.type);
+    cardElement.querySelector('.popup__type').textContent = typeLodging[pin.offer.type];
     cardElement.querySelector('.popup__text--capacity').textContent = pin.offer.rooms + ' комнаты для ' + pin.offer.guests + ' гостей';
     cardElement.querySelector('.popup__text--time').textContent = 'Заезд после ' + pin.offer.checkin + ', выезд до ' + pin.offer.checkout;
     cardElement.querySelector('.popup__features').innerHTML = '';

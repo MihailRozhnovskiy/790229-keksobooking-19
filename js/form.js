@@ -1,6 +1,15 @@
 'use strict';
 
 (function () {
+
+  var SERVER_OK = 200;
+  var DECIMAL_NUMBER_SYSTEM = 10;
+  var TIMEOUT = 2000;
+  var MIN_PRICE_BUNGALO = 0;
+  var MIN_PRICE_FLAT = 1000;
+  var MIN_PRICE_HOUSE = 5000;
+  var MIN_PRICE_PALACE = 10000;
+  var MAX_PRICE = 1000000;
   var formTitle = document.querySelector('#title');
 
   var formTitleInputHandler = function () {
@@ -22,11 +31,6 @@
   var compTypeLodgingPriceHandler = function () {
     var typeLodging = document.querySelector('#type').value;
     var price = document.querySelector('#price').value;
-    var MIN_PRICE_BUNGALO = 0;
-    var MIN_PRICE_FLAT = 1000;
-    var MIN_PRICE_HOUSE = 5000;
-    var MIN_PRICE_PALACE = 10000;
-    var MAX_PRICE = 1000000;
     if (typeLodging === 'bungalo' && price < MIN_PRICE_BUNGALO) {
       formPrice.setCustomValidity('«Бунгало» — минимальная цена за ночь 0');
       formPrice.setAttribute('placeholder', MIN_PRICE_BUNGALO);
@@ -73,7 +77,7 @@
   var compTimeInTimeOutHandler = function () {
     var timeIn = document.querySelector('#timein').value;
     var timeOut = document.querySelector('#timeout').value;
-    if (parseInt(timeOut, 10) < parseInt(timeIn, 10)) {
+    if (parseInt(timeOut, DECIMAL_NUMBER_SYSTEM) < parseInt(timeIn, DECIMAL_NUMBER_SYSTEM)) {
       selectTimeIn.setCustomValidity('');
     } else {
       selectTimeIn.setCustomValidity('«Время выезда» должно быть не менее чем за час до «Время заезда»');
@@ -91,8 +95,7 @@
   var buttonUploadHandler = function (evt) {
     evt.preventDefault();
     var mapPins = document.querySelectorAll('.map__pin');
-    window.dataLoadUpload.upload(new FormData(form), function (status, statusText) {
-      var SERVER_OK = 200;
+    window.data.upload(new FormData(form), function (status, statusText) {
 
       var getStartPage = function () {
         var card = document.querySelector('.map__card');
@@ -106,6 +109,7 @@
         for (var i = 1; i < mapPins.length; i++) {
           mapPins[i].remove();
         }
+        window.map.setFieldsetDisabled();
         main.removeEventListener('click', clickCloseSuccessMessageHandler);
         document.removeEventListener('keydown', escCloseSuccessMessageHandler);
       };
@@ -115,9 +119,9 @@
         var successTemplate = document.querySelector('#success').content.querySelector('.success');
         var successElement = successTemplate.cloneNode(true);
         main.appendChild(successElement);
-        setTimeout(window.form.getStartPage, 2000);
+        setTimeout(window.form.getStartPage, TIMEOUT);
       } else {
-        window.error.openErrorMessage('Ошибка! Статус ответа сервера: ' + status + ' ' + statusText);
+        window.mistake.openErrorMessage('Ошибка! Статус ответа сервера: ' + status + ' ' + statusText);
       }
       document.addEventListener('keydown', escCloseSuccessMessageHandler);
       main.addEventListener('click', clickCloseSuccessMessageHandler);
