@@ -7,7 +7,6 @@
   var loadHandler = function () {
     var data = JSON.parse(xhr.responseText);
     if (xhr.status === SERVER_OK) {
-      window.dataLoad = data;
       window.filters.getPins(data);
     } else {
       window.mistake.openErrorMessage('Ошибка! Статус ответа сервера: ' + xhr.status + ' ' + xhr.statusText);

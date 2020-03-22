@@ -5,7 +5,7 @@
   var SERVER_OK = 200;
   var DECIMAL_NUMBER_SYSTEM = 10;
   var TIMEOUT = 2000;
-  var MIN_PRICE_BUNGALO = 0;
+  var MIN_PRICE_BUNGALO = '0';
   var MIN_PRICE_FLAT = 1000;
   var MIN_PRICE_HOUSE = 5000;
   var MIN_PRICE_PALACE = 10000;
@@ -77,10 +77,10 @@
   var compTimeInTimeOutHandler = function () {
     var timeIn = document.querySelector('#timein').value;
     var timeOut = document.querySelector('#timeout').value;
-    if (parseInt(timeOut, DECIMAL_NUMBER_SYSTEM) < parseInt(timeIn, DECIMAL_NUMBER_SYSTEM)) {
+    if (parseInt(timeOut, DECIMAL_NUMBER_SYSTEM) <= parseInt(timeIn, DECIMAL_NUMBER_SYSTEM)) {
       selectTimeIn.setCustomValidity('');
     } else {
-      selectTimeIn.setCustomValidity('«Время выезда» должно быть не менее чем за час до «Время заезда»');
+      selectTimeIn.setCustomValidity('«Время выезда» должно быть до ' + timeIn);
     }
   };
   compTimeInTimeOutHandler();
@@ -148,7 +148,7 @@
     window.form.getStartPage();
   };
 
-  var buttonResetForm = form.querySelector('.ad-form__reset');
+  var buttonResetForm = document.querySelector('.ad-form__reset');
 
   var buttonResetFormHandler = function () {
     form.reset();
