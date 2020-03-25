@@ -35,7 +35,7 @@
       var coordinateY = pinMain.offsetTop - shift.y;
       var coordinateX = pinMain.offsetLeft - shift.x;
 
-      if (coordinateY > (MIN_HEIGHT - pinMainSizeY) && coordinateY < (MAX_HEIGHT - (pinMainSizeY / HALF))) {
+      if (coordinateY >= (MIN_HEIGHT - pinMainSizeY) && coordinateY <= (MAX_HEIGHT - pinMainSizeY)) {
         pinMain.style.top = coordinateY + 'px';
       }
       if (coordinateX < (widthMap - pinMainSizeX) && coordinateX > (widthMap - widthMap - pinMainSizeX)) {
@@ -65,4 +65,8 @@
     return address;
   };
   getAddress();
+
+  window.pinMain = {
+    getAddress: getAddress
+  };
 })();

@@ -11,6 +11,9 @@
   var MIN_PRICE_PALACE = 10000;
   var MAX_PRICE = 1000000;
   var formTitle = document.querySelector('#title');
+  var pinMain = document.querySelector('.map__pin--main');
+  var coordPinMainLeft = pinMain.style.left;
+  var coordPinMainTop = pinMain.style.top;
 
   var formTitleInputHandler = function () {
     if (formTitle.validity.tooShort) {
@@ -110,6 +113,9 @@
           mapPins[i].remove();
         }
         window.map.setFieldsetDisabled();
+        pinMain.style.left = coordPinMainLeft;
+        pinMain.style.top = coordPinMainTop;
+        window.pinMain.getAddress();
         main.removeEventListener('click', clickCloseSuccessMessageHandler);
         document.removeEventListener('keydown', escCloseSuccessMessageHandler);
       };
